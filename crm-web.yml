@@ -1,0 +1,471 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: Check if epel-release is installed
+      command: rpm -qa | grep epel
+      register: rpm_check
+      become: true
+
+    - name: Execute script if epel-release is not installed
+      yum: 
+        name: epel-release-7-11.noarch.rpm
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if redis is installed
+      command: rpm -qa | grep redis.x86_64
+      register: rpm_check
+      become: true
+
+    - name: Execute script if redis is nnnot installed
+      yum: 
+        name: redis.x86_64
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if python-psycopg2.x86_64 installed
+      command: rpm -qa | grep python-psycopg2.x86_64
+      register: rpm_check
+      become: true
+
+    - name: Execute script if python-psycopg2.x86_64 is not installed
+      yum:  
+        name: python-psycopg2.x86_64
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if postgresql-server is installed
+      command: rpm -qa | grep postgresql-server
+      register: rpm_check
+      become: true
+
+    - name: Execute script if postgresql-server is not installed
+      yum:  
+        name: postgresql-server
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if postgresql-contrib is installed
+      command: rpm -qa | grep postgresql-contrib
+      register: rpm_check
+      become: true
+
+    - name: Execute script if postgresql-contrib is not installed
+      yum: 
+        name: postgresql-contrib-9.2.24-1.el7_5.x86_64
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if remi-release.noarch is installed
+      command: rpm -qa  | grep remi-release.noarch
+      register: rpm_check
+      become: true
+
+    - name: Execute script if remi-release.noarch is not installed
+      yum: 
+        name: remi-release.noarch
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true  
+
+    - name: Check if yum-utils is installed
+      command: rpm -qa | grep  yum-utils
+      register: rpm_check
+      become: true
+
+    - name: Execute script if yum-utils is not installed
+      yum: 
+        name: yum-utils
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true  
+
+    - name: Check if expect.x86_64 is installed
+      command: rpm -qa | grep  expect.x86_64
+      register: rpm_check
+      become: true
+
+    - name: Execute script if expect.x86_64 is not installed
+      yum: 
+        name: expect.x86_64
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true  
+
+    - name: Enable remi repo
+      raw:  yum-config-manager --enable remi-php72
+      become: true
+      tags: install
+
+    - name: Check if httpd is installed
+      command: rpm -qa | grep httpd
+      register: rpm_check
+      become: true
+
+    - name: Execute script if httpd is not installed
+      yum: 
+        name: httpd
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true  
+
+    - name: Check if php72 is installed
+      command: rpm -qa | grep php72
+      register: rpm_check
+      become: true
+
+    - name: Execute script if php72 is not installed
+      yum: 
+        name: php72
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true  
+
+    - name: Check if php72-php-pecl-mongodb is installed
+      command: rpm -qa | grep php72-php-pecl-mongod
+      register: rpm_check
+      become: true
+
+    - name: Execute script if php72-php-pecl-mongodb is not installed
+      yum: 
+        name: php72-php-pecl-mongodb
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if php72-php-pgsql is installed
+      command: rpm -qa | grep php72-php-pgsql
+      register: rpm_check
+      become: true
+
+    - name: Execute script if php72-php-pgsql is not installed
+      yum: 
+        name: php72-php-pgsql
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if php72-php-pgsql is installed
+      command: rpm -qa | grep php72-php-pgsql
+      register: rpm_check
+      become: true
+
+    - name: Execute script if php72-php-pgsql is not installed
+      yum: 
+        name: php72-php-pgsql
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if php72-php72-php-gd is installed
+      command: rpm -qa | grep php72-php-gd
+      register: rpm_check
+      become: true
+
+    - name: Execute script if php72-php-gd is not installed
+      yum: 
+        name: php72-php-gd
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if php72-php-json is installed
+      command: rpm -qa | grep php72-php-jsond
+      register: rpm_check
+      become: true
+
+    - name: Execute script if php72-php-json is not installed
+      yum: 
+        name: php72-php-json
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if php72-php-mbstring  is installed
+      command: rpm -qa | grep php72-php-mbstring 
+      register: rpm_check
+      become: true
+
+    - name: Execute script if php72-php-mbstring  is not installed
+      yum: 
+        name: php72-php-mbstring 
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if php72-php-mysqlnd   is installed
+      command: rpm -qa | grep php72-php-mysqlnd 
+      register: rpm_check
+      become: true
+
+    - name: Execute script if php72-php-mysqlnd   is not installed
+      yum: 
+        name: php72-php-mysqlnd  
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if php72-php-xml  is installed
+      command: rpm -qa | grep php72-php-xml
+      register: rpm_check
+      become: true
+
+    - name: Execute script if php72-php-xml   is not installed
+      yum: 
+        name: php72-php-xml 
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if php72-php-xmlrpc  is installed
+      command: rpm -qa | grep php72-php-xmlrpc
+      register: rpm_check
+      become: true
+
+    - name: Execute script if php72-php-xmlrpc   is not installed
+      yum: 
+        name: php72-php-xmlrpc 
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if php72-php-opcache  is installed
+      command: rpm -qa | grep php72-php-opcache
+      register: rpm_check
+      become: true
+
+    - name: Execute script if php72-php-opcache   is not installed
+      yum: 
+        name: php72-php-opcache
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if php72-php-bcmath  is installed
+      command: rpm -qa | grep php72-php-bcmath
+      register: rpm_check
+      become: true
+
+    - name: Execute script if php72-php-bcmath  is not installed
+      yum: 
+        name: php72-php-bcmath
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true
+
+    - name: Check if PostgreSQL database is initialized.
+      stat:
+        path: "{{ postgresql_data_dir }}/PG_VERSION"
+      register: pgdata_dir_version
+      become: true
+
+    - name: Ensure PostgreSQL database is initialized.
+      command: "{{ postgresql_bin_path }}/initdb -D {{ postgresql_data_dir }}"
+      when: not pgdata_dir_version.stat.exists
+      become_user: "{{ postgresql_user }}"
+      become: true
+  
+    - name: Check if postgis is installed
+      command: rpm -qa | grep postgis
+      register: rpm_check
+      become: true
+
+    - name: Execute script if postgis is not installed
+      yum: 
+        name: postgis
+        state: present
+      when: rpm_check.stdout.find('is not installed') != -1
+      become: true  
+
+    - name: Enable postgresql
+      raw: systemctl enable postgresql.service
+      become: true
+      tags: install  
+      
+    - name: Start postgresql-server
+      raw: systemctl start postgresql.service
+      become: true
+      tags: install
+    
+    - name: Copy httpd config files
+      copy: 
+        src: files/{{ item }} 
+        dest: /etc/httpd/conf.d/
+      with_items:
+        - autoindex.conf
+        - crm-test.cartrack.sg.conf
+        - crm-test2.cartrack.sg.conf
+        - crm.cartrack.sg.conf
+        - local.conf
+        - php.conf
+        - ssl.conf
+        - userdir.conf
+        - welcome.conf
+      become: true
+    
+    - name: Copy 10-deflate.conf file to /etc/httpd/conf.modules.d/
+      copy: 
+        src: files/10-deflate.conf
+        dest: /etc/httpd/conf.modules.d/
+      become: true
+    
+    - name: Changing pg_hba.conf to trust all
+      template:
+        src: template/pg_hba.conf
+        dest: /var/lib/pgsql/data/
+        owner: postgres
+        group: postgres
+        mode: 0644
+      become: true
+
+    - name: Restart postgresql-server
+      raw: systemctl restart postgresql
+      become: true
+
+    - name: Install PIP expect
+      yum:
+        name: python-pip
+      become: true
+
+    - name: upgrade PIP
+      raw: pip install --upgrade pip
+      become: true
+
+    - name: Install PIP expect
+      pip:
+        name: pexpect
+      become: true
+
+    - name: Login as psql
+      shell: |
+        psql -U postgres
+
+        expect "postgres-#"
+        send "{{ POSTGRESSPASSWORD }}\n"
+
+        expect "postgres-#"
+        ALTER USER postgres with password ‘{{ POSTGRESSPASSWORD }}’;
+        
+        expect "postgres-#"
+        send "\n"
+        
+        exit 0
+      args:
+        executable: /bin/expect
+
+    - name: Changing pg_hba.conf to MD5 
+      template:
+        src: template/pg_hba_md5.conf
+        dest: /var/lib/pgsql/data/pg_hba.conf
+        owner: postgres
+        group: postgres
+        mode: 0644
+      become: true
+
+    - name: Restart postgresql-server
+      raw: systemctl restart postgresql
+      become: true
+  
+    - name: ensure database is created
+      postgresql_db: name=crm2
+     
+    - name: CREATE ROLE crm2
+      postgresql_user:
+        db: crm2
+        name: crm2
+        password: "{{ POSTGRESSPASSWORD }}"
+        priv: ALL
+        role_attr_flags: SUPERUSER
+
+    - name: Create role rds_superuser
+      postgresql_user:
+        name: rds_superuser
+        password: "{{ RDS_SUPERUSER_DBPASSWD }}"
+        role_attr_flags: SUPERUSER  
+
+    # name: Create role rdsadmin
+    -  postgresql_user:
+        name: rdsadmin
+        password: "{{ rdsadmin_DBPASSWD }}"
+        role_attr_flags: SUPERUSER 
+    
+    - postgresql_ext: 
+        name: fuzzystrmatch
+        db: crm2
+        
+    - postgresql_ext: 
+        name: hstore
+        db: crm2
+        
+    - postgresql_ext: 
+        name: plpgsql
+        db: crm2
+      
+    - postgresql_ext: 
+        name: postgis
+        db: crm2
+    
+    - postgresql_schema:
+        name: tiger
+        
+#    - postgresql_ext: 
+#        name: postgis_tiger_geocoder
+#        db: crm2
+
+#   - postgresql_schema:
+#        name: topology
+#        database: crm2
+        
+#    - postgresql_ext: 
+#        name: postgis_topology
+#        schema: postgis_topology
+#        db: crm2
+
+    - postgresql_ext: 
+        name: uuid-ossp     
+        db: crm2
+
+    - postgresql_user:
+        name: crm2
+        password: "{{ POSTGRESSPASSWORD }}"
+        role_attr_flags: NOSUPERUSER
+    
+    - name: Setup Cron Jobs 15min
+      cron: 
+        name: "15min.php"
+        user: "root"
+        minute: "0,15,30,45"
+        hour: "09-18"
+        job: "`cd /var/www/html/crm/jsonrpc/crm-api/modules/Cron && php 15min.php`"
+      become: true
+    
+    - name: Setup Cron Jobs 5min
+      cron: 
+        name: "5min.php"
+        user: "root"
+        minute: "*/5"
+        hour: "*"
+        job: "`cd /var/www/html/crm/jsonrpc/crm-api/modules/Cron && php 5min.php`"
+      become: true
+    
+    - name: Setup Cron Jobs 1min
+      cron: 
+        name: "1min.php"
+        user: "root"
+        minute: "*/5"
+        hour: "*"
+        job: "`cd /var/www/html/crm/jsonrpc/crm-api/modules/Cron && php 1min.php`"
+      become: true
+    
+    - name: Copy phpinfo.php to /var/www/html/
+      copy: 
+        src: files/phpinfo.php
+        dest: /var/www/html/
+      become: true

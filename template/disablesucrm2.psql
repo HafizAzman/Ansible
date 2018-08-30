@@ -1,0 +1,2 @@
+# Login as posgres user
+ALTER ROLE crm2 nosuperuser;

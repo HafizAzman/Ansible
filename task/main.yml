@@ -1,0 +1,100 @@
+---
+- name: Install crm-web
+  yum: 
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - httpd
+    - php
+    - php7.1
+    - php_mongodb
+    - php_pgsql
+    - php7.1-php-bcmath
+    - redis
+    - postgres
+    - postgis
+  become: true
+
+- name: Copy httpd config files
+  copy: 
+    src: files/{{ item }} 
+    dest: /etc/httpd/conf.d/
+  with_items:
+    - autoindex.conf
+    - crm-test.cartrack.sg.conf
+    - crm-test2.cartrack.sg.conf
+    - crm.cartrack.sg.conf
+    - local.conf
+    - php.conf
+    - ssl.conf
+    - userdir.conf
+    - welcome.conf
+  become: true
+
+- name: Copy 10-deflate.conf file to /etc/httpd/conf.modules.d/
+  copy: 
+    src: files/10-deflate.conf
+    dest: /etc/httpd/conf.modules.d/
+  become: true
+
+- name: Copy createcrm2roles.psql
+  template:  
+    src: template/createcrm2roles.psql
+    dest: ~/createcrm2roles.psql
+  
+- name: Execute sql script createcrm2roles.psql
+  become: true
+  become_user: postgres
+  shell: "psql ~/createcrm2roles.psql"
+
+- name: Delete sql script createcrm2roles.psql
+  file: 
+    path: ~/createcrm2roles.psql
+    state: absent
+
+- name: Copy createextension.psql
+  template:  
+    src: template/createextension.psql
+    dest: ~/createextension.psql
+  
+- name: Execute sql script createextension.psql
+  become: true
+  become_user: postgres
+  shell: "PGPASSWORD={{ CRM2PASSWORD }} psql -U {{ CRM2USER }} < ~/createextension.psql"
+
+- name: Delete sql script createcrm2roles.psql
+  file: 
+    path: ~/createextension.psql
+    state: absent
+
+- name: As postgres user disable superuser mode for crm2 user
+  become: true
+  become_user: postgres
+  shell: "PGPASSWORD={{ POSTGRESSPASSWORD }} psql -U {{ POSTGRESSUSER }} -c "ALTER ROLE crm2 nosuperuser;""
+
+- name: Setup Cron Jobs 15min
+  cron: 
+    name: "15min.php"
+    user: "root"
+    minute: "0,15,30,45"
+    hour: "09-18"
+    job: "`cd /var/www/html/crm/jsonrpc/crm-api/modules/Cron && php 15min.php`"
+  become: true
+
+- name: Setup Cron Jobs 5min
+  cron: 
+    name: "5min.php"
+    user: "root"
+    minute: "*/5"
+    hour: "*"
+    job: "`cd /var/www/html/crm/jsonrpc/crm-api/modules/Cron && php 5min.php`"
+  become: true
+
+- name: Setup Cron Jobs 1min
+  cron: 
+    name: "1min.php"
+    user: "root"
+    minute: "*/5"
+    hour: "*"
+    job: "`cd /var/www/html/crm/jsonrpc/crm-api/modules/Cron && php 1min.php`"
+  become: true

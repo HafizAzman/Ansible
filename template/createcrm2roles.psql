@@ -1,0 +1,13 @@
+CREATE ROLE crm2 password "crm2" with login;
+  
+  ALTER ROLE crm2 superuser;  -- temporary for setup 
+  
+  CREATE DATABASE crm2
+  WITH OWNER = crm2
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'en_US.UTF-8'
+       LC_CTYPE = 'en_US.UTF-8'
+       CONNECTION LIMIT = -1;
+  
+  ALTER DATABASE crm2 SET search_path = "$user", public, pg_catalog, topology;
